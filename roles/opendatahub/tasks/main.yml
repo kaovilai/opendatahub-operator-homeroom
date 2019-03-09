@@ -1,2 +1,3 @@
 ---
-# tasks file for opendatahub
+- debug:
+    msg: "Open Data Hub Role"

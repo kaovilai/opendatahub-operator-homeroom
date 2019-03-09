@@ -1,0 +1,10 @@
+---
+# tasks file for role ceph-container
+- name: deploy Ceph for development
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - ceph-rgw-keys.secrets.yaml.j2
+    - ceph-nano.svc.yaml.j2
+    - ceph-nano.statefulset.yaml.j2

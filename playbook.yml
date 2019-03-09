@@ -1,5 +1,9 @@
 - hosts: localhost
   gather_facts: no
+  vars:
+    state: "present"
   tasks:
   - import_role:
       name: "opendatahub"
+  - import_role:
+      name: "ceph-container"

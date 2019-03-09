@@ -1,0 +1,5 @@
+---
+# defaults file for ceph-container
+ceph_service_name: "{{ ceph_container.service_name | default('ceph-nano') }}"
+s3_access_key: "{{ ceph_container.access_key | default('Zm9v') }}"
+s3_secret_key: "{{ ceph_container.secret_key | default('YmFy') }}"

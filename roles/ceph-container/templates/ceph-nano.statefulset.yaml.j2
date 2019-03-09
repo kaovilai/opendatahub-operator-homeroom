@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: opendatahub
+    component: ceph-nano
+  name: ceph-nano
+  namespace: "{{ meta.namespace }}"
+spec:
+  replicas: 1
+  serviceName: ceph-nano
+  selector:
+    matchLabels:
+      app: opendatahub
+      component: ceph-nano
+  template:
+    metadata:
+      name: ceph-nano
+      labels:
+        app: opendatahub
+        component: ceph-nano
+    spec:
+      containers:
+      - image: ceph/daemon:latest
+        imagePullPolicy: Always
+        name: ceph-nano
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "500m"
+            memory: 512Mi
+          requests:
+            cpu: "500m"
+            memory: 512Mi
+        env:
+        - name: NETWORK_AUTO_DETECT
+          value: "4"
+        - name: RGW_CIVETWEB_PORT
+          value: "8000"
+        - name: RGW_NAME
+          value: "{{ ceph_service_name }}"
+        - name: SREE_PORT
+          value: "5001"
+        - name: CEPH_DEMO_UID
+          value: "nano"
+        - name: CEPH_DAEMON
+          value: "demo"
+        - name: DEBUG
+          value: "verbose"
+        - name: CEPH_DEMO_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ceph-rgw-keys
+              key: rgw_user_user_key
+        - name: CEPH_DEMO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ceph-rgw-keys
+              key: rgw_user_secret_key

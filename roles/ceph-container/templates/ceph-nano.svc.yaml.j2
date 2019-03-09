@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ ceph_service_name }}"
+  namespace: "{{ meta.namespace }}"
+  labels:
+    app: opendatahub
+    component: ceph-nano
+spec:
+  ports:
+  - name: ceph-nano-8000
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  type: LoadBalancer
+  selector:
+    app: opendatahub
+    component: ceph-nano
