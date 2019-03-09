@@ -1,0 +1,5 @@
+---
+- version: v1alpha1
+  group: opendatahub.io
+  kind: OpenDataHub
+  playbook: /opt/ansible/playbook.yml

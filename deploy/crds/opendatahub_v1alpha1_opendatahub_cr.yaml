@@ -1,0 +1,7 @@
+apiVersion: opendatahub.io/v1alpha1
+kind: OpenDataHub
+metadata:
+  name: example-opendatahub
+spec:
+  # Add fields here
+  size: 3
