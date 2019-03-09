@@ -9,6 +9,8 @@ spec:
     listKind: OpenDataHubList
     plural: opendatahubs
     singular: opendatahub
+    shortNames:
+    - odh
   scope: Namespaced
   subresources:
     status: {}
