@@ -15,9 +15,8 @@ spec:
       serviceAccountName: opendatahub-operator
       containers:
         - name: opendatahub-operator
-          # Replace this with the built image name
-          image: "{{ REPLACE_IMAGE }}"
-          imagePullPolicy: "{{ pull_policy|default('Always') }}"
+          image: "quay.io/llasmith/opendatahub-operator:latest"
+          imagePullPolicy: "Always"
           env:
             - name: WATCH_NAMESPACE
               valueFrom:
