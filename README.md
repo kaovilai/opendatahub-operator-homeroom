@@ -17,7 +17,10 @@ Custom Resource Definition: OpenDataHub
 
 Installation
 ----------
+To add open data hub to the OLM Catalog to see the [olm-catalog README](/deploy/olm-catalog/README.md)
+
 The operator is currently designed to work within your existing namespace. You'll need cluster-admin privileges to create the OpenDataHub custom resource definition and apply the anyuid scc for the ceph container
+
 ```bash
 # Add the OpenDataHub Custom Resource Definition. Requires cluster-admin privileges
 $ oc create -f opendatahub_v1alpha1_opendatahub_crd.yaml

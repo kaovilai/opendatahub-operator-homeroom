@@ -1,0 +1,20 @@
+# For more info on OperatorGroups
+# See https://github.com/operator-framework/operator-lifecycle-manager/blob/master/Documentation/design/operatorgroups.md
+apiVersion: operators.coreos.com/v1alpha2
+kind: OperatorGroup
+metadata:
+  name: opendatahub-operator
+  namespace: opendatahub-operator
+# Omit the spec section because we want the opendatahub-operator to be available in every namespace
+#
+#For specific namespaces
+# spec:
+#  targetNamespaces:
+#  - my-namespace
+#  - my-other-namespace
+#  - my-other-other-namespace
+#
+#For namespaces with a matching label
+# spec:
+#   selector:
+#     cool.io/prod: "true"
