@@ -1,0 +1,14 @@
+---
+state: "present"
+deploy_all_notebooks: false
+registry: null
+repository: null
+
+cookie_secret: 'changeme'
+storage_class: null
+db_memory: '512Mi'
+db_password: 'changeme'
+jupyterhub_memory: '512Mi'
+notebook_image: 's2i-minimal-notebook:3.6'
+notebook_memory: '512Mi'
+s3_endpoint_url: null

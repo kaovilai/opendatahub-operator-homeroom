@@ -6,6 +6,4 @@
   - import_role:
       name: "opendatahub"
   - import_role:
-      name: "jupyter-on-openshift"
-  - import_role:
-      name: "spark-operator"
+      name: "aicoe-jupyterhub"

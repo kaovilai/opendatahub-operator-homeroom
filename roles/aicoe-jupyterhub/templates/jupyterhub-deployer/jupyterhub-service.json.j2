@@ -1,0 +1,31 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "jupyterhub",
+        "namespace": "{{ meta.namespace }}",
+        "labels": {
+            "app": "jupyterhub"
+        }
+    },
+    "spec": {
+        "ports": [
+            {
+                "name": "8080-tcp",
+                "protocol": "TCP",
+                "port": 8080,
+                "targetPort": 8080
+            },
+            {
+                "name": "8081-tcp",
+                "protocol": "TCP",
+                "port": 8081,
+                "targetPort": 8081
+            }
+        ],
+        "selector": {
+            "app": "jupyterhub",
+            "deploymentconfig": "jupyterhub"
+        }
+    }
+}

@@ -1,0 +1,135 @@
+---
+# tasks file for AI CoE JupyterHub
+#TODO: Cleanup different image build tasks that were ported from APB
+################################################################################
+# NOTEBOOKS BUILD CONFIGS AND IMAGESTREAMS
+################################################################################
+- name: Create notebook ImageStreams
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item.file) }}"
+  when: deploy_all_notebooks == True
+  with_items:
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: s2i-minimal-notebook
+      tag: "3.6"
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: s2i-scipy-notebook
+      tag: "3.6"
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: s2i-tensorflow-notebook
+      tag: "3.6"
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: nbviewer
+      tag: "latest"
+
+- name: Create notebook BuildConfigs
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item) }}"
+  when: deploy_all_notebooks == True and not registry
+  with_items:
+    - jupyter-notebook-images/minimal-notebook-buildconfig.json.j2
+    - jupyter-notebook-images/scipy-notebook-buildconfig.json.j2
+    - jupyter-notebook-images/tensorflow-notebook-buildconfig.json.j2
+    - nbviewer-images/nbviewer-buildconfig.json.j2
+
+- name: Create spark notebook ImageStreams (for dev plan)
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item.file) }}"
+  when: deploy_all_notebooks == False
+  with_items:
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: s2i-spark-minimal-notebook
+      tag: "3.6"
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: nbviewer
+      tag: "latest"
+
+- name: Create spark notebook BuildConfigs (for dev plan)
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item) }}"
+  when: deploy_all_notebooks == False and not registry
+  with_items:
+    - jupyter-notebook-images-spark/spark-minimal-notebook-buildconfig.json.j2
+    - nbviewer-images/nbviewer-buildconfig.json.j2
+
+- name: Create spark notebook ImageStreams (for other plans)
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item.file) }}"
+  when: deploy_all_notebooks == True
+  with_items:
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: s2i-spark-minimal-notebook
+      tag: "3.6"
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: s2i-spark-scipy-notebook
+      tag: "3.6"
+
+- name: Create spark notebook BuildConfigs (for other plans)
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item) }}"
+  when: deploy_all_notebooks == True and not registry
+  with_items:
+    - jupyter-notebook-images-spark/spark-minimal-notebook-buildconfig.json.j2
+    - jupyter-notebook-images-spark/spark-scipy-notebook-buildconfig.json.j2
+
+
+- name: Create JupyterHub ImageStreams
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item.file)}}"
+  with_items:
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: jupyterhub
+      tag: "latest"
+    - file: jupyter-notebook-images/imagestream.json.j2
+      image: jupyterhub-img
+      tag: "latest"
+
+- name: Create JupyterHub BuildConfigs
+  openshift_raw:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  when: not registry
+  with_items:
+    - jupyterhub-deployer/jupyterhub-buildconfig.json.j2
+    - jupyterhub-deployer/jupyterhub-dh-buildconfig.json.j2
+
+- name: Create JupyterHub RBAC
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - jupyterhub-deployer/serviceaccount.json.j2
+    - jupyterhub-deployer/rolebinding.json.j2
+
+- name: Create the Jupyterhub ConfigMap
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - jupyterhub-deployer/configmap.json.j2
+
+- name: Deploy the Jupyterhub DB
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - jupyterhub-deployer/jupyterhub-db-pv.json.j2
+    - jupyterhub-deployer/jupyterhub-db-dc.json.j2
+    - jupyterhub-deployer/jupyterhub-db-service.json.j2
+
+- name: deploy Jupyterhub
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - jupyterhub-deployer/jupyterhub-dc.json.j2
+    - jupyterhub-deployer/jupyterhub-service.json.j2
+    - jupyterhub-deployer/route.json.j2
+    - jupyterhub-deployer/jupyterhub-singleuser-profiles-configmap.yaml.j2
