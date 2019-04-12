@@ -6,4 +6,4 @@
   - import_role:
       name: "opendatahub"
   - import_role:
-      name: "ceph-container"
+      name: "jupyter-on-openshift"

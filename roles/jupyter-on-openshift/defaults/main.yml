@@ -1,0 +1,22 @@
+---
+# defaults file for AICoE-JupyterHub
+# defaults file for aicoe-jupyterhub
+db_memory: '512Mi'
+db_password: 'changeme'
+database_password: 'changeme'
+cookie_secret: 'changeme'
+jupyterhub_memory: '1Gi'
+jupyterhub_image: "jupyterhub:3.0.7"
+notebook_image: 's2i-minimal-notebook:3.6'
+notebook_memory: '1Gi'
+database_memory: "1Gi"
+deploy_all_notebooks: true
+storage_class: null
+s3_endpoint_url: 'http://ceph:8000'
+jupyterhub_config: ""
+
+registry: null
+repository: null
+deploy_all_notebooks: false
+
+

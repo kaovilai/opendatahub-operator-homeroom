@@ -1,0 +1,30 @@
+---
+# tasks file for jupyter-on-openshift
+- name: Create the s2i-minimal-notebook imagestream
+  k8s:
+    state: present
+    definition: "{{ lookup('template', item) }}"
+  with_items:
+    - s2i-minimal-notebook.imagestream.json.j2
+
+- name: Create the jupyterhub imagestream
+  k8s:
+    state: present
+    definition: "{{ lookup('template', item) }}"
+  with_items:
+    - jupyterhub.imagestream.json.j2
+
+- name: Create the jupyterhub deployment
+  k8s:
+    state: present
+    definition: "{{ lookup('template', item) }}"
+  with_items:
+    - jupyter-deployer/jupyterhub.configmap.json.j2
+    - jupyter-deployer/jupyterhub-hub.serviceaccount.json.j2
+    - jupyter-deployer/jupyterhub.rolebinding.json.j2
+    - jupyter-deployer/jupyterhub.dc.json.j2
+    - jupyter-deployer/jupyterhub.service.json.j2
+    - jupyter-deployer/jupyterhub.route.json.j2
+    - jupyter-deployer/jupyterhub-db.pvc.json.j2
+    - jupyter-deployer/jupyterhub-db.dc.json.j2
+    - jupyter-deployer/jupyterhub-db.service.json.j2

@@ -1,0 +1,21 @@
+{
+  "kind": "PersistentVolumeClaim",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "jupyterhub-db",
+    "namespace": "{{ meta.namespace }}",
+    "labels": {
+      "app": "jupyterhub"
+    }
+  },
+  "spec": {
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "resources": {
+      "requests": {
+        "storage": "1Gi"
+      }
+    }
+  }
+}

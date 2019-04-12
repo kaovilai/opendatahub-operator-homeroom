@@ -1,0 +1,22 @@
+{
+  "kind": "ImageStream",
+  "apiVersion": "image.openshift.io/v1",
+  "metadata": {
+    "name": "jupyterhub",
+    "namespace": "{{ meta.namespace }}"
+  },
+  "spec": {
+    "lookupPolicy": {
+      "local": true
+    },
+    "tags": [
+      {
+        "name": "3.0.7",
+        "from": {
+          "kind": "DockerImage",
+          "name": "quay.io/jupyteronopenshift/jupyterhub:3.0.7"
+        }
+      }
+    ]
+  }
+}

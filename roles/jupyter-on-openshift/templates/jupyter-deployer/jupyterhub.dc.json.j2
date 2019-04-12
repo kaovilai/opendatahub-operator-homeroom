@@ -1,0 +1,130 @@
+{
+  "kind": "DeploymentConfig",
+  "apiVersion": "apps.openshift.io/v1",
+  "metadata": {
+    "name": "jupyterhub",
+    "namespace": "{{ meta.namespace }}",
+    "labels": {
+      "app": "jupyterhub"
+    }
+  },
+  "spec": {
+    "strategy": {
+      "type": "Recreate"
+    },
+    "triggers": [
+      {
+        "type": "ConfigChange"
+      }
+    ],
+    "replicas": 1,
+    "selector": {
+      "app": "jupyterhub",
+      "deploymentconfig": "jupyterhub"
+    },
+    "template": {
+      "metadata": {
+        "annotations": {
+          "alpha.image.policy.openshift.io/resolve-names": "*"
+        },
+        "labels": {
+          "app": "jupyterhub",
+          "deploymentconfig": "jupyterhub"
+        }
+      },
+      "spec": {
+        "serviceAccountName": "jupyterhub-hub",
+        "initContainers": [
+          {
+            "name": "wait-for-database",
+            "image": "{{ jupyterhub_image }}",
+            "command": [
+              "wait-for-database"
+            ],
+            "resources": {
+              "limits": {
+                "memory": "{{ jupyterhub_memory }}"
+              }
+            },
+            "env": [
+              {
+                "name": "JUPYTERHUB_DATABASE_PASSWORD",
+                "value": "{{ database_password }}"
+              },
+              {
+                "name": "JUPYTERHUB_DATABASE_HOST",
+                "value": "jupyterhub-db"
+              },
+              {
+                "name": "JUPYTERHUB_DATABASE_NAME",
+                "value": "postgres"
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "name": "jupyterhub",
+            "image": "{{ jupyterhub_image }}",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "{{ jupyterhub_memory }}"
+              }
+            },
+            "env": [
+              {
+                "name": "APPLICATION_NAME",
+                "value": "jupyterhub"
+              },
+              {
+                "name": "JUPYTERHUB_NOTEBOOK_IMAGE",
+                "value": "{{ notebook_image }}"
+              },
+              {
+                "name": "JUPYTERHUB_NOTEBOOK_MEMORY",
+                "value": "{{ notebook_memory }}"
+              },
+              {
+                "name": "JUPYTERHUB_DATABASE_PASSWORD",
+                "value": "{{ database_password }}"
+              },
+              {
+                "name": "JUPYTERHUB_DATABASE_HOST",
+                "value": "jupyterhub-db"
+              },
+              {
+                "name": "JUPYTERHUB_DATABASE_NAME",
+                "value": "postgres"
+              },
+              {
+                "name": "JUPYTERHUB_COOKIE_SECRET",
+                "value": "{{ cookie_secret }}"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "name": "config",
+                "mountPath": "/opt/app-root/configs"
+              }
+            ]
+          }
+        ],
+        "volumes": [
+          {
+            "name": "config",
+            "configMap": {
+              "name": "jupyterhub-cfg",
+              "defaultMode": 420
+            }
+          }
+        ]
+      }
+    }
+  }
+}
