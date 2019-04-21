@@ -1,22 +1,14 @@
 ---
-# defaults file for AICoE-JupyterHub
-# defaults file for aicoe-jupyterhub
-db_memory: '512Mi'
+# defaults file for jupyter-on-openshift
+database_memory: "{{ jupyter_on_openshift.database_memory | default('1Gi') }}"
 db_password: 'changeme'
 database_password: 'changeme'
 cookie_secret: 'changeme'
-jupyterhub_memory: '1Gi'
-jupyterhub_image: "jupyterhub:3.0.7"
-notebook_image: 's2i-minimal-notebook:3.6'
-notebook_memory: '1Gi'
-database_memory: "1Gi"
-deploy_all_notebooks: true
-storage_class: null
-s3_endpoint_url: 'http://ceph:8000'
-jupyterhub_config: ""
-
-registry: null
-repository: null
-deploy_all_notebooks: false
-
-
+jupyterhub_memory: "{{ jupyter_on_openshift.jupyterhub_memory | default('1Gi') }}"
+jupyterhub_image: "{{ jupyter_on_openshift.jupyterhub_image | default('jupyterhub:3.0.7') }}"
+notebook_image: "{{ jupyter_on_openshift.notebook_image | default('s2i-minimal-notebook:3.6') }}"
+notebook_memory: "{{ jupyter_on_openshift.notebook_memory | default('1Gi') }}"
+jupyterhub_config: "{{ jupyter_on_openshift.jupyterhub_config | default('') }}"
+s3_endpoint_url: "{{ jupyter_on_openshift.s3_endpoint_url | default('http://ceph:8000') }}"
+s3_access_key: "{{ jupyter_on_openshift.s3_access_key | default('') }}"
+s3_secret_key: "{{ jupyter_on_openshift.s3_secret_key | default('') }}"

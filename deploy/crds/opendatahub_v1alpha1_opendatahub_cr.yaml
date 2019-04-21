@@ -4,6 +4,8 @@ metadata:
   name: example-opendatahub
 spec:
   # Add fields here
+  jupyter-on-openshift:
+    jupyterhub_config: ""
   ceph-container:
     service_name: "ceph-nano"
     # Base64 encoded S3 keys.
