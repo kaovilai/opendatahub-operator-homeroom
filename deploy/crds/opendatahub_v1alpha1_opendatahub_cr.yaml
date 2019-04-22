@@ -6,3 +6,10 @@ spec:
   # Add fields here
   jupyter-on-openshift:
     jupyterhub_config: ""
+  spark-operator:
+    worker_node_count: 2
+    worker_memory: "2Gi"
+    worker_cpu: 2
+    master_node_count: 1
+    master_memory: "2Gi"
+    master_cpu: 2

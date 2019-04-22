@@ -1,9 +1,9 @@
 ---
 #defaults file for the spark-operator role
-worker_node_count: 2
-worker_memory: "2Gi"
-worker_cpu: 2
-master_node_count: 1
-master_memory: "2Gi"
-master_cpu: 2
-spark_image: "jkremser/openshift-spark:2.3-latest"
+worker_node_count: "{{ spark_operator.worker_node_count | default(2) }}"
+worker_memory: "{{ spark_operator.worker_memory | default('2Gi') }}"
+worker_cpu: "{{ spark_operator.worker_cpu | default(2) }}"
+master_node_count: "{{ spark_operator.master_node_count | default(1) }}"
+master_memory: "{{ spark_operator.master_memory | default('2Gi') }}"
+master_cpu: "{{ spark_operator.master_cpu | default(2) }}"
+spark_image: "{{ spark_operator.spark_image | default('jkremser/openshift-spark:2.3-latest') }}"
