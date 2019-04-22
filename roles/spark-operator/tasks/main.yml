@@ -1,0 +1,10 @@
+---
+#tasks file for spark-operator
+- name: deploy Spark Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - spark-operator.yaml.j2
+    - jupyterhub-spark-operator-configmap.yaml.j2
+

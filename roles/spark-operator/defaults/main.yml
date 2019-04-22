@@ -1,0 +1,9 @@
+---
+#defaults file for the spark-operator role
+worker_node_count: 2
+worker_memory: "2Gi"
+worker_cpu: 2
+master_node_count: 1
+master_memory: "2Gi"
+master_cpu: 2
+spark_image: "jkremser/openshift-spark:2.3-latest"
