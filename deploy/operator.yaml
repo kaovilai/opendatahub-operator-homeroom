@@ -15,7 +15,7 @@ spec:
       serviceAccountName: opendatahub-operator
       containers:
         - name: opendatahub-operator
-          image: "quay.io/llasmith/opendatahub-operator:latest"
+          image: "quay.io/opendatahub/opendatahub-operator:master"
           imagePullPolicy: "Always"
           env:
             - name: WATCH_NAMESPACE

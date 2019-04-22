@@ -6,10 +6,3 @@ spec:
   # Add fields here
   jupyter-on-openshift:
     jupyterhub_config: ""
-  ceph-container:
-    service_name: "ceph-nano"
-    # Base64 encoded S3 keys.
-    # Default access key is 'foo'
-    access_key: "Zm9v"
-    # Default secret key is 'bar'
-    secret_key: "YmFy"
