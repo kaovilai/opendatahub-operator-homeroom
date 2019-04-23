@@ -24,11 +24,11 @@ $ oc create -f opendatahub_v1alpha1_opendatahub_crd.yaml
 
 # Create a configmap from the CSV, Package and CRD files for the OLM Catalog to reference
 $ oc create configmap opendatahub-operators \
-  --from-file deploy/olm-catalog/opendatahub-operator/opendatahub-operator.v0.0.1.clusterserviceversion.yaml \
-  --from-file deploy/crds/opendatahub_v1alpha1_opendatahub_crd.yaml \
-  --from-file deploy/olm-catalog/opendatahub-operator/opendatahub-operator.package.yaml
+  --from-file clusterServiceVersions=deploy/olm-catalog/opendatahub-operator/opendatahub-operator.v0.0.1.clusterserviceversion.yaml \
+  --from-file customResourceDefinitions=deploy/crds/opendatahub_v1alpha1_opendatahub_crd.yaml \
+  --from-file packages=deploy/olm-catalog/opendatahub-operator/opendatahub-operator.package.yaml
 
-#TODO: Create the CatalogSource for opendatahub-operators catalog group -- Mapping between OperatorGroup and Configmap data
+#TODO: Create the CatalogSource for opendatahub-operator catalog group -- Mapping between OperatorGroup and Configmap data
 #TODO: Create the ConfigMap to store the CSV, CRD and PackageSource data
 # ConfigMap is just an OLM bundle of -- https://github.com/operator-framework/community-operators#know-what-to-contribute
 * opendatahub-operator.package.yaml

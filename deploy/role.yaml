@@ -778,6 +778,14 @@ rules:
   - get
   - create
 - apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - opendatahubs.opendatahub.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
   - apps
   resourceNames:
   - opendatahub-operator
