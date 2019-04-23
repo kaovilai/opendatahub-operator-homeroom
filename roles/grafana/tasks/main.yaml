@@ -1,0 +1,81 @@
+---
+  - name: Deploy Grafana Instance
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'grafana.yaml') }}"
+
+  - name: Get Prometheus Route
+    k8s_facts:
+      api_version: v1
+      kind: Route
+      name: prometheus
+    register: prometheus_route_output
+
+  - name: Set Promtheus Route
+    set_fact:
+      prometheus_route: https://{{ prometheus_route_output.resources[0].spec.host }}
+
+  - name: Get Grafana Route
+    k8s_facts:
+      api_version: v1
+      kind: Route
+      name: grafana
+    register: grafana_route_output
+
+  - name: Set Grafana Route
+    set_fact:
+      grafana_route: https://{{ grafana_route_output.resources[0].spec.host }}
+
+  - name: Get the secrets associated with the Grafana service account
+    k8s_facts:
+      api_version: v1
+      kind: ServiceAccount
+      name: grafana
+    register: grafana_sa
+
+  - name: Get the Grafana service account token
+    k8s_facts:
+      api_version: v1
+      kind: Secret
+      name: "{{ item.name }}"
+    register: grafana_sa_secret
+    with_items:
+      - "{{ grafana_sa.resources[0].secrets }}"
+    when: "'token' in item.name"
+
+  - name: Set Grafana Token
+    set_fact:
+      sa_grafana_token: "{{ item.resources[0].data.token | b64decode }}"
+    with_items:
+      - "{{ grafana_sa_secret.results }}"
+    when: "'resources' in item "
+
+  - name: Wait for the Grafana deployment to complete
+    k8s_facts:
+      api_version: v1
+      kind: Deployment
+      name: grafana
+    register: grafana_dc
+    until: "'availableReplicas' in grafana_dc.resources[0].status and grafana_dc.resources[0].status.availableReplicas == 1"
+    retries: 15
+    delay: 5
+
+  - name: Check if data source already exists
+    uri:
+      url: "{{ grafana_route }}/api/datasources/name/{{ meta.namespace }}"
+      validate_certs: no
+    ignore_errors: true
+    register: data_source_exists
+    changed_when: false
+
+  - name: Create Data Source
+    uri:
+      url: "{{ grafana_route }}/api/datasources"
+      method: POST
+      body_format: json
+      validate_certs: no
+      user: admin
+      password: admin
+      body: "{{ lookup('template', 'prometheus-datasource.json.j2') }}"
+    when:
+      - data_source_exists is failed

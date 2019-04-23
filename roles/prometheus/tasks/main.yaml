@@ -1,0 +1,15 @@
+---
+  - name: Deploy Prometheus Instance
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'prometheus-objects.yaml') }}"
+
+  - name: Wait for the Prometheus deployment to complete
+    k8s_facts:
+      api_version: apps/v1beta1
+      kind: StatefulSet
+      name: prometheus
+    register: prometheus_dc
+    until: "'readyReplicas' in prometheus_dc.resources[0].status and prometheus_dc.resources[0].status.readyReplicas == 1"
+    retries: 15
+    delay: 5

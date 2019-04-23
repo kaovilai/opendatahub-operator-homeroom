@@ -1,0 +1,13 @@
+{
+    "name": "{{ meta.namespace }}",
+    "type": "prometheus",
+    "typeLogoUrl": "",
+    "access": "proxy",
+    "url": "{{prometheus_route}}",
+    "basicAuth": false,
+    "withCredentials": false,
+    "jsonData": {
+        "tlsSkipVerify":true,
+        "token":"{{ sa_grafana_token }}"
+    }
+}
