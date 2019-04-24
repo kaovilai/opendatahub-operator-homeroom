@@ -1,9 +1,9 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
-  name: opendatahub-operators
+  name: opendatahub-catalog
 spec:
   displayName: Open Data Hub Operators
-  image: quay.io/opendatahub/opendatahub-operator-registry:latest
+  image: quay.io/opendatahub/opendatahub-olm-catalog:latest
   sourceType: grpc
   publisher: Open Data Hub
