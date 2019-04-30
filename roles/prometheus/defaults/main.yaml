@@ -1,0 +1,5 @@
+IMAGE_PROXY: openshift/oauth-proxy:v1.0.0
+IMAGE_PROMETHEUS: openshift/prometheus:v2.3.2
+IMAGE_ALERTMANAGER: openshift/prometheus-alertmanager:v0.15.1
+IMAGE_ALERT_BUFFER: openshift/prometheus-alert-buffer:v0.0.2
+SESSION_SECRET: "{{ ansible_fqdn | to_uuid }}"
