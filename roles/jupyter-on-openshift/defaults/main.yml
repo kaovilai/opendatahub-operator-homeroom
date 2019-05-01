@@ -9,6 +9,7 @@ jupyterhub_image: "{{ jupyter_on_openshift.jupyterhub_image | default('jupyterhu
 notebook_image: "{{ jupyter_on_openshift.notebook_image | default('s2i-minimal-notebook:3.6') }}"
 notebook_memory: "{{ jupyter_on_openshift.notebook_memory | default('1Gi') }}"
 jupyterhub_config: "{{ jupyter_on_openshift.jupyterhub_config | default('') }}"
-s3_endpoint_url: "{{ jupyter_on_openshift.s3_endpoint_url | default('http://ceph:8000') }}"
-s3_access_key: "{{ jupyter_on_openshift.s3_access_key | default('') }}"
-s3_secret_key: "{{ jupyter_on_openshift.s3_secret_key | default('') }}"
+
+# This will add additional environment vars to be passed to the jupyterhub deploymentconfig
+# This should be used to add env vars to the notebook pod that will be created for the user
+extra_env_vars: "{{ odh_spec['jupyter-on-openshift']['extra_env_vars'] | default('') }}"

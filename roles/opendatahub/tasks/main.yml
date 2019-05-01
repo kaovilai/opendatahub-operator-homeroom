@@ -1,3 +1,18 @@
 ---
 - debug:
     msg: "Open Data Hub Role"
+
+  # Create a reference to the .spec of the ODH Custom Resource
+  # This fact will allow us to reference all of the .spec properties without having
+  # to account for the ansible converting the names from:
+  #   camelCase to snake_case
+  #   snake_case to snake__case
+  #   s3camelCase to s_3_camel_case
+  # See https://github.com/operator-framework/operator-sdk/blob/master/doc/ansible/dev/developer_guide.md#extra-vars-sent-to-ansible
+  # Once set all roles can reference the CRD .spec using {{ odh_spec['some-spec-property']['someVar']
+- set_fact:
+    odh_spec: "{{ _opendatahub_io_opendatahub.spec }}"
+
+- debug:
+    msg: "HOSTVARS - {{ hostvars }}"
+  when: opendatahub is defined and opendatahub.debug is defined and opendatahub.debug
