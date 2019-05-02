@@ -39,7 +39,7 @@ NOTE: If you forget to do this step, you can go back and fix it by clicking on `
 
 3. When your notebook server is up, click the `New` dropdown button and select `Terminal` from the dropdown menu. When you are in the new terminal, you can use shell commands directly on the container.  We'll use this to download the tutorial notebook onto the server using the following command:
    ```
-   curl -L -O https://gitlab.com/opendatahub/opendatahub-operator/raw/master/tutorials/basic_tutorial.ipynb?inline=false
+   curl -L -O https://gitlab.com/opendatahub/opendatahub-operator/raw/master/tutorials/basic_tutorial.ipynb
    ```
 
 4. Navigate back to the Jupyter Files view by clicking on the Jupyter logo in the terminal browser, or by going back to the previous browser tab.
