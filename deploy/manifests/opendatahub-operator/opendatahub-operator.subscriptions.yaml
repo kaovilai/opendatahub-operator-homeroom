@@ -2,10 +2,11 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   generateName: opendatahub-operator
-  namespace: opendatahub-operator
 spec:
-  source: opendatahub-operators
-  sourceNamespace: openshift-operator
-  name: opendatahub-operator
-  startingCSV: opendatahub-operator.v0.0.1
+  # Name of the catalog source
+  source: opendatahub-catalog
+  # Operator catalog channel for subscription. Defined in the operator package.yaml
   channel: alpha
+  name: opendatahub-operator
+  # Include source namespace
+  #sourceNamespace: <INSERT NAMESPACE>
