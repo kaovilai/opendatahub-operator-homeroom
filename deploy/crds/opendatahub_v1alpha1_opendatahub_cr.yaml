@@ -3,9 +3,24 @@ kind: OpenDataHub
 metadata:
   name: example-opendatahub
 spec:
-  # Add fields here
   jupyter-on-openshift:
-    jupyterhub_config: ""
+    notebook_image: "s2i-minimal-notebook:3.6"
+    notebook_memory: "2Gi"
+    # Add these whitelisted environment variables from JupyterHub to the user's notebook pod
+    jupyterhub_config: |
+      c.KubeSpawner.env_keep = ['S3_ENDPOINT_URL', 'S3_ACCESS_KEY', 'S3_SECRET_KEY', 'PYSPARK_SUBMIT_ARGS', 'PYSPARK_DRIVER_PYTHON', 'PYSPARK_DRIVER_PYTHON_OPTS', 'SPARK_HOME', 'SPARK_CLUSTER', 'PYTHONPATH', 'ATTENDEE_ID']
+    # Environment variables that will be set on the JupyterHub pod
+    extra_env_vars:
+      ATTENDEE_ID: "userX"
+      S3_ENDPOINT_URL: "http://s3.foo.com:8000"
+      S3_ACCESS_KEY: "YOURS3ACCESSKEYHERE"
+      S3_SECRET_KEY: "this1is2just3gibberish"
+      PYSPARK_SUBMIT_ARGS: "--conf spark.cores.max=6 --conf spark.executor.instances=2 --conf spark.executor.memory=3G --conf spark.executor.cores=3 --conf spark.driver.memory=4G --packages com.amazonaws:aws-java-sdk:1.7.4,org.apache.hadoop:hadoop-aws:2.7.3 pyspark-shell"
+      PYSPARK_DRIVER_PYTHON: "jupyter"
+      PYSPARK_DRIVER_PYTHON_OPTS: "notebook"
+      SPARK_CLUSTER: "spark-cluster-opendatahub"
+      SPARK_HOME: "/opt/app-root/lib/python3.6/site-packages/pyspark/"
+      PYTHONPATH: "$PYTHONPATH:/opt/app-root/lib/python3.6/site-packages/:/opt/app-root/lib/python3.6/site-packages/pyspark/python/:/opt/app-root/lib/python3.6/site-packages/pyspark/python/lib/py4j-0.8.2.1-src.zip"
   spark-operator:
     worker_node_count: 2
     worker_memory: "2Gi"
@@ -13,3 +28,4 @@ spec:
     master_node_count: 1
     master_memory: "2Gi"
     master_cpu: 2
+    spark_image: "jkremser/openshift-spark:2.3-latest"

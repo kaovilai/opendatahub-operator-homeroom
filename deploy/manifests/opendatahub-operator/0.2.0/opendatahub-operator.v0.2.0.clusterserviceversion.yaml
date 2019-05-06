@@ -2,18 +2,20 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    capabilities: Full Lifecycle
-    categories: "AI/Machine Learning"
+    capabilities: Basic Install
+    categories: "AI/Machine Learning, Big Data"
     description: Open Data Hub is a community effort
-    containerImage: quay.io/llasmith/opendatahub-operator:latest
+    containerImage: quay.io/opendatahub/opendatahub-operator:v0.2.0
     createdAt: 2019-04-02T:01:23:45Z
     repository: https://gitlab.com/opendatahub/opendatahub-operator
-    alm-examples: '[ { "apiVersion": "opendatahub.io/v1alpha1", "kind": "OpenDataHub", "metadata": { "name": "example-opendatahub" }, "spec": { "jupyter-on-openshift": { "jupyterhub_config": "" } } } ]'
-  name: opendatahub-operator.v0.0.1
-  namespace: opendatahub-operator
+    support: Open Data Hub
+    certified: "false"
+    alm-examples: '[ { "kind": "OpenDataHub", "spec": { "jupyter-on-openshift": { "jupyterhub_config": "" }, "spark-operator": { "master_node_count": 1, "master_memory": "2Gi", "master_cpu": 2, "worker_node_count": 2, "worker_memory": "2Gi", "worker_cpu": 2 } }, "apiVersion": "opendatahub.io/v1alpha1", "metadata": { "name": "example-opendatahub" } } ]'
+  name: opendatahub-operator.v0.2.0
+  namespace: placeholder
 spec:
   maturity: alpha
-  version: 0.0.1
+  version: 0.2.0
   apiservicedefinitions: {}
   labels:
     operated-by: opendatahub-operator
@@ -27,10 +29,22 @@ spec:
       version: v1alpha1
       displayName: Open Data Hub
       description: Deployment of components from the Open Data Hub community
-  description: "The Open Data Hub is a machine-learning-as-a-service platform built on Red Hat's Kubernetes-based OpenShift® Container Platform, Ceph Object Storage, and Kafka/Strimzi integrating a collection of open source projects"
+  description: |
+    The Open Data Hub is a machine-learning-as-a-service platform built on Red Hat's Kubernetes-based OpenShift® Container Platform, Ceph Object Storage, and Kafka/Strimzi integrating a collection of open source projects.
+
+    Open Data Hub is a meta-project that integrates open source projects into a practical solution. It aims to foster collaboration between communities, vendors, user-enterprises, and academics following open source best practices. The open source community can experiment and develop intelligent applications without incurring high costs and having to master the complexity of modern machine learning and artificial intelligence software stacks.
+
+    ### Core Components
+    * JupyterHub - open source multi-user notebook platform
+    * Apache Spark - unified analytics engine for large-scale data processing
+    * Ceph - open source object storage
+    * Prometheus - monitoring and alerting tool
+    * Grafana - data visualization and monitoring
+
   keywords:
-  - "opendatahub"
+  - "open data hub"
   - "aicoe"
+  - "open source"
   maintainers:
   - name: Open Data Hub
     email: contributors@lists.opendatahub.io
@@ -57,6 +71,7 @@ spec:
           selector:
             matchLabels:
               name: opendatahub-operator
+              operated-by: opendatahub-operator
           strategy: {}
           template:
             metadata:
@@ -68,14 +83,14 @@ spec:
                 - name: WATCH_NAMESPACE
                   valueFrom:
                     fieldRef:
-                      fieldPath: metadata.namespace
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
                 - name: POD_NAME
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: opendatahub-operator
-                image: quay.io/llasmith/opendatahub-operator:latest
+                image: quay.io/opendatahub/opendatahub-operator:v0.2.0
                 imagePullPolicy: Always
                 name: opendatahub-operator
                 resources: {}
@@ -195,12 +210,6 @@ spec:
           - get
           - list
           - watch
-        - apiGroups:
-          - ""
-          resources:
-          - serviceaccounts
-          verbs:
-          - impersonate
         - apiGroups:
           - ""
           resources:
@@ -364,13 +373,6 @@ spec:
           - builds/clone
           verbs:
           - create
-        - apiGroups:
-          - build.openshift.io
-          resources:
-          - jenkins
-          verbs:
-          - edit
-          - view
         - apiGroups:
           - ""
           - apps.openshift.io
@@ -682,12 +684,6 @@ spec:
           - list
           - watch
         - apiGroups:
-          - build.openshift.io
-          resources:
-          - jenkins
-          verbs:
-          - view
-        - apiGroups:
           - ""
           - apps.openshift.io
           resources:
@@ -824,14 +820,6 @@ spec:
           - list
           - watch
         - apiGroups:
-          - build.openshift.io
-          resources:
-          - jenkins
-          verbs:
-          - admin
-          - edit
-          - view
-        - apiGroups:
           - ""
           - project.openshift.io
           resources:
@@ -855,14 +843,6 @@ spec:
           verbs:
           - get
           - create
-        - apiGroups:
-          - apiextensions.k8s.io
-          resourceNames:
-          - opendatahubs.opendatahub.io
-          resources:
-          - customresourcedefinitions
-          verbs:
-          - get
         - apiGroups:
           - apps
           resourceNames:
