@@ -45,7 +45,7 @@ In order to get started with the Open Data Hub, you need to deploy it into your 
 
 4. Navigate back to the Jupyter Files view by clicking on the Jupyter logo in the terminal browser, or by going back to the previous browser tab.
 
-5. Open the `01-Spark-with-Hybrid-Data.ipynb` notebook by clicking on it.  This will open the notebook in Jupyter.  The notebook will contain the next set of instructions for the tutorial.
+5. Open the `01-Examples.ipynb` notebook by clicking on it.  This will open the notebook in Jupyter.  The notebook will contain the next set of instructions for the tutorial.
 
 6. Notebooks contain *cells*.  Run each cell in your notebook by clicking on the `>| Run` button or hitting `Shift+Enter` for each cell, starting with the first.  When a cell is actively running, it will have `[*]` on the side.  Some cells will take time to run.  Once done, it will have a number, such as [1].  You can go through the entire notebook until all cells are run.
 
