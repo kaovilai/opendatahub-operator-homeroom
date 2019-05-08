@@ -114,6 +114,19 @@
               }
 {% endfor %}
 {% endif %}
+{% if extra_env_vars_secret %}
+{% for env in extra_env_vars_secret %}
+              ,{
+                "name": "{{ env }}",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "name": "{{ extra_env_vars_secret[env]['name'] }}",
+                    "key": "{{ extra_env_vars_secret[env]['key'] }}"
+                  }
+                }
+              }
+{% endfor %}
+{% endif %}
             ],
             "volumeMounts": [
               {
