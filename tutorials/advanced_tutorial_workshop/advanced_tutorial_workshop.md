@@ -40,7 +40,7 @@ In order to get started with the Open Data Hub, you need to deploy it into your 
 
    curl -L -o files.tar.gz https://gitlab.com/opendatahub/opendatahub-operator/-/archive/master/opendatahub-operator-master.tar.gz?path=tutorials%2Fadvanced_tutorial_workshop
 
-   tar -xvzf files.tar.gz opendatahub-operator-master-tutorials/tutorials/advanced_tutorial_workshop/ --strip-components 2
+   tar -xvzf files.tar.gz opendatahub-operator-master-tutorials-advanced_tutorial_workshop/tutorials/advanced_tutorial_workshop/ --strip-components 3
    ```
 
 4. Navigate back to the Jupyter Files view by clicking on the Jupyter logo in the terminal browser, or by going back to the previous browser tab.
