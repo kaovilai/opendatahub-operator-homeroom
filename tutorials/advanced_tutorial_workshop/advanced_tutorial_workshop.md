@@ -36,7 +36,9 @@ In order to get started with the Open Data Hub, you need to deploy it into your 
 
 3. When your notebook server is up, click the `New` dropdown button and select `Terminal` from the dropdown menu. When you are in the new terminal, you can use shell commands directly on the container.  We'll use this to download the tutorial notebooks and workshop files onto the server using the following commands in the Jupyter terminal:
    ```
-   curl -L -o oc https://gitlab.com/opendatahub/opendatahub-operator/tutorials/misc/oc
+   mkdir bin
+   
+   curl -L -o bin/oc https://gitlab.com/opendatahub/opendatahub-operator/raw/master/tutorials/misc/oc
 
    curl -L -o files.tar.gz https://gitlab.com/opendatahub/opendatahub-operator/-/archive/master/opendatahub-operator-master.tar.gz?path=tutorials%2Fadvanced_tutorial_workshop
 
