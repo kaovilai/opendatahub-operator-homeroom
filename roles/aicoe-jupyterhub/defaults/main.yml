@@ -1,14 +1,13 @@
 ---
 state: "present"
-deploy_all_notebooks: false
-registry: null
-repository: null
-
-cookie_secret: 'changeme'
-storage_class: null
-db_memory: '512Mi'
-db_password: 'changeme'
-jupyterhub_memory: '512Mi'
-notebook_image: 's2i-minimal-notebook:3.6'
-notebook_memory: '512Mi'
-s3_endpoint_url: null
+deploy_all_notebooks: "{{ odh_spec['aicoe-jupyterhub']['deploy_all_notebooks'] | default(False) }}"
+registry: "{{ odh_spec['aicoe-jupyterhub']['registry'] | default('') }}"
+repository: "{{ odh_spec['aicoe-jupyterhub']['repository'] | default('') }}"
+cookie_secret: "{{ odh_spec['aicoe-jupyterhub']['db_password'] | default('changeme') }}"
+storage_class: "{{ odh_spec['aicoe-jupyterhub']['storage_class'] | default('') }}"
+db_memory: "{{ odh_spec['aicoe-jupyterhub']['db_memory'] | default('1Gi') }}"
+db_password: "{{ odh_spec['aicoe-jupyterhub']['db_password'] | default('changeme') }}"
+jupyterhub_memory: "{{ odh_spec['aicoe-jupyterhub']['jupyterhub_memory'] | default('1Gi') }}"
+notebook_image: "{{ odh_spec['aicoe-jupyterhub']['notebook_image'] | default('s2i-minimal-notebook:3.6') }}"
+notebook_memory: "{{ odh_spec['aicoe-jupyterhub']['notebook_memory'] | default('1Gi') }}"
+s3_endpoint_url: "{{ odh_spec['aicoe-jupyterhub']['s3_endpoint_url'] | default('') }}"
