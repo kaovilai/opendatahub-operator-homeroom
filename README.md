@@ -29,7 +29,15 @@ $ oc create -f opendatahub_v1alpha1_opendatahub_crd.yaml
 $ oc create -f deploy/service_account.yaml
 $ oc create -f deploy/role.yaml
 $ oc create -f deploy/role_binding.yaml
+```
 
+There is a known [issue](#2) where the jupyterhub installation will fail due to the ODH operator service account not being able to create a rolebinding to a role with more permissions than the ODH service account has access to.
+The current workaround is the make the ODH service account a project admin
+```bash
+$ oc adm policy add-role-to-user admin -z opendatahub-operator
+```
+
+```
 # Deploy the OpenDataHub Operator in the namespace
 $ oc create -f deploy/operator.yaml
 ```
