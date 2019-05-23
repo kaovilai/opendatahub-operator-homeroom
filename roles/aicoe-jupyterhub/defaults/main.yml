@@ -11,3 +11,16 @@ jupyterhub_memory: "{{ odh_spec['aicoe-jupyterhub']['jupyterhub_memory'] | defau
 notebook_image: "{{ odh_spec['aicoe-jupyterhub']['notebook_image'] | default('s2i-minimal-notebook:3.6') }}"
 notebook_memory: "{{ odh_spec['aicoe-jupyterhub']['notebook_memory'] | default('1Gi') }}"
 s3_endpoint_url: "{{ odh_spec['aicoe-jupyterhub']['s3_endpoint_url'] | default('') }}"
+
+spark_configmap_template: "{{ odh_spec['aicoe-jupyterhub']['spark_configmap_template'] | default('jupyterhub-spark-operator-configmap') }}"
+spark_pyspark_submit_args: "{{ odh_spec['aicoe-jupyterhub']['spark_pyspark_submit_args'] | default('--conf spark.cores.max=6 --conf spark.executor.instances=2 --conf spark.executor.memory=3G --conf spark.executor.cores=3 --conf spark.driver.memory=4G --packages com.amazonaws:aws-java-sdk:1.7.4,org.apache.hadoop:hadoop-aws:2.7.3 pyspark-shell') }}"
+spark_pyspark_driver_python: "{{ odh_spec['aicoe-jupyterhub']['spark_pyspark_driver_python'] | default('jupyter') }}"
+spark_pyspark_driver_python_opts: "{{ odh_spec['aicoe-jupyterhub']['spark_pyspark_driver_python_opts'] | default('notebook') }}"
+spark_home: "{{ odh_spec['aicoe-jupyterhub']['spark_home'] | default('/opt/app-root/lib/python3.6/site-packages/pyspark/') }}"
+spark_pythonpath: "{{ odh_spec['aicoe-jupyterhub']['spark_pythonpath'] | default('$PYTHONPATH:/opt/app-root/lib/python3.6/site-packages/:/opt/app-root/lib/python3.6/site-packages/pyspark/python/:/opt/app-root/lib/python3.6/site-packages/pyspark/python/lib/py4j-0.8.2.1-src.zip') }}"
+
+spark_worker_nodes: "{{ odh_spec['aicoe-jupyterhub']['spark_worker_nodes'] | default('2') }}"
+spark_master_nodes: "{{ odh_spec['aicoe-jupyterhub']['spark_master_nodes'] | default('1') }}"
+spark_memory: "{{ odh_spec['aicoe-jupyterhub']['spark_memory'] | default('4Gi') }}"
+spark_cpu: "{{ odh_spec['aicoe-jupyterhub']['spark_cpu'] | default('3') }}"
+spark_image: "{{ odh_spec['aicoe-jupyterhub']['spark_image'] | default('quay.io/opendatahub/spark-cluster-image:spark22python36') }}"

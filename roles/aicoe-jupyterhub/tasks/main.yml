@@ -1,6 +1,5 @@
 ---
 # tasks file for AI CoE JupyterHub
-#TODO: Cleanup different image build tasks that were ported from APB
 ################################################################################
 # NOTEBOOKS BUILD CONFIGS AND IMAGESTREAMS
 ################################################################################
@@ -79,6 +78,9 @@
     - jupyter-notebook-images-spark/spark-scipy-notebook-buildconfig.json.j2
 
 
+################################################################################
+# JUPYTERHUB DEPLOYMENTS
+################################################################################
 - name: Create JupyterHub ImageStreams
   openshift_raw:
     state: "{{ state }}"
@@ -133,3 +135,11 @@
     - jupyterhub-deployer/jupyterhub-service.json.j2
     - jupyterhub-deployer/route.json.j2
     - jupyterhub-deployer/jupyterhub-singleuser-profiles-configmap.yaml.j2
+
+# Deploy the template that jupyterhub-singleuser-profiles references to spawn spark clusters per user notebook pod
+- name: Add spark-operator configmap template
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - jupyterhub-deployer/jupyterhub-spark-operator-configmap.yaml.j2

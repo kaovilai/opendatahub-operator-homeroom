@@ -13,15 +13,13 @@
         "triggers": [
             {
                 "type": "ConfigChange"
-            },
-            {
-                "type": "ImageChange"
             }
         ],
         "source": {
             "type": "Git",
             "git": {
-                "uri": "https://github.com/jupyter-on-openshift/jupyterhub-quickstart.git"
+                "uri": "https://github.com/jupyter-on-openshift/jupyterhub-quickstart.git",
+                "ref": "3.0.7"
             }
         },
         "strategy": {
@@ -29,7 +27,7 @@
             "sourceStrategy": {
                 "from": {
                     "kind": "DockerImage",
-                    "name": "quay.io/vpavlin/python-36-ubi7:ubi"
+                    "name": "registry.access.redhat.com/ubi7/python-36"
                 }
             }
         },

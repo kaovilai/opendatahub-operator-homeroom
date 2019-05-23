@@ -17,19 +17,19 @@ data:
         - 's2i-spark-minimal-notebook:3.6'
         - 's2i-spark-scipy-notebook:3.6'
         env:
-          PYSPARK_SUBMIT_ARGS: '--conf spark.cores.max=6 --conf spark.executor.instances=2 --conf spark.executor.memory=3G --conf spark.executor.cores=3 --conf spark.driver.memory=4G --packages com.amazonaws:aws-java-sdk:1.7.4,org.apache.hadoop:hadoop-aws:2.7.3 pyspark-shell'
-          PYSPARK_DRIVER_PYTHON: "jupyter"
-          PYSPARK_DRIVER_PYTHON_OPTS: "notebook"
-          SPARK_HOME: '/opt/app-root/lib/python3.6/site-packages/pyspark/'
-          PYTHONPATH: '$PYTHONPATH:/opt/app-root/lib/python3.6/site-packages/:/opt/app-root/lib/python3.6/site-packages/pyspark/python/:/opt/app-root/lib/python3.6/site-packages/pyspark/python/lib/py4j-0.8.2.1-src.zip'
+          PYSPARK_SUBMIT_ARGS: '{{ spark_pyspark_submit_args }}'
+          PYSPARK_DRIVER_PYTHON: '{{ spark_pyspark_driver_python }}'
+          PYSPARK_DRIVER_PYTHON_OPTS: '{{ spark_pyspark_driver_python_opts }}'
+          SPARK_HOME: '{{ spark_home }}'
+          PYTHONPATH: '{{ spark_pythonpath }}'
         services:
           spark:
-            template: jupyterhub-spark-operator-configmap
+            template: '{{ spark_configmap_template }}'
             parameters:
-              WORKER_NODES: 2
-              MASTER_NODES: 1
-              MEMORY: 4Gi
-              CPU: 3
-              SPARK_IMAGE: quay.io/opendatahub/spark-cluster-image:spark22python36
+              WORKER_NODES: '{{ spark_worker_nodes }}'
+              MASTER_NODES: '{{ spark_master_nodes }}'
+              MEMORY: '{{ spark_memory }}'
+              CPU: '{{ spark_cpu }}'
+              SPARK_IMAGE: '{{ spark_image }}'
             return:
               SPARK_CLUSTER: 'metadata.name'

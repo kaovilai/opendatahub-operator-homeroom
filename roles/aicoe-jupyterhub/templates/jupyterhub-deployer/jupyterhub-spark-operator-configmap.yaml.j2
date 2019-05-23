@@ -1,0 +1,44 @@
+apiVersion: template.openshift.io/v1
+# This is a hack because the ansible operator-sdk has a bug when querying the apiGroup for template.openshift.io
+#   openshift will return multiple resources for "kind: Template" so we use "kind: templates" as a workaround
+kind: templates
+metadata:
+  name: jupyterhub-spark-operator-configmap
+  labels:
+    app: jupyterhub
+    component: spark-operator
+  namespace: {{ meta.namespace }}
+objects:
+- apiVersion: v1
+  data:
+    config: |-
+      worker:
+        instances: ${WORKER_NODES}
+        memory: ${MEMORY}
+        cpu: ${CPU}
+      master:
+        instances: ${MASTER_NODES}
+        memory: ${MEMORY}
+        cpu: ${CPU}
+      customImage: ${SPARK_IMAGE}
+      env:
+      - name: SPARK_METRICS_ON
+        value: prometheus
+  kind: ConfigMap
+  metadata:
+    labels:
+      radanalytics.io/kind: SparkCluster
+    name: spark-cluster-${USERNAME}
+parameters:
+- name: USERNAME
+  required: true
+- name: WORKER_NODES
+  value: "2"
+- name: MASTER_NODES
+  value: "1"
+- name: MEMORY
+  value: 2Gi
+- name: CPU
+  value: "2"
+- name: SPARK_IMAGE
+  value: jkremser/openshift-spark:2.3-latest
