@@ -9,7 +9,8 @@
       api_version: apps/v1beta1
       kind: StatefulSet
       name: prometheus
+      namespace: "{{ meta.namespace }}"
     register: prometheus_dc
-    until: "'readyReplicas' in prometheus_dc.resources[0].status and prometheus_dc.resources[0].status.readyReplicas == 1"
+    until: "prometheus_dc.resources|length > 0 and 'readyReplicas' in prometheus_dc.resources[0].status and prometheus_dc.resources[0].status.readyReplicas == 1"
     retries: 15
     delay: 5

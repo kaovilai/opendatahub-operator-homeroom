@@ -63,3 +63,7 @@ spec:
       S3_ENDPOINT_URL: "http://s3.foo.com:8000"
       S3_ACCESS_KEY: "YOURS3ACCESSKEYHERE"
       S3_SECRET_KEY: "this1is2just3gibberish"
+
+  # Deployment of Prometheus and Grafana for Monitoring of ODH
+  monitoring:
+    odh_deploy: true

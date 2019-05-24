@@ -9,9 +9,10 @@
       api_version: v1
       kind: Route
       name: prometheus
+      namespace: "{{ meta.namespace }}"
     register: prometheus_route_output
 
-  - name: Set Promtheus Route
+  - name: Set Prometheus Route
     set_fact:
       prometheus_route: https://{{ prometheus_route_output.resources[0].spec.host }}
 
@@ -20,6 +21,7 @@
       api_version: v1
       kind: Route
       name: grafana
+      namespace: "{{ meta.namespace }}"
     register: grafana_route_output
 
   - name: Set Grafana Route
@@ -31,6 +33,7 @@
       api_version: v1
       kind: ServiceAccount
       name: grafana
+      namespace: "{{ meta.namespace }}"
     register: grafana_sa
 
   - name: Get the Grafana service account token
@@ -38,6 +41,7 @@
       api_version: v1
       kind: Secret
       name: "{{ item.name }}"
+      namespace: "{{ meta.namespace }}"
     register: grafana_sa_secret
     with_items:
       - "{{ grafana_sa.resources[0].secrets }}"
@@ -55,6 +59,7 @@
       api_version: v1
       kind: Deployment
       name: grafana
+      namespace: "{{ meta.namespace }}"
     register: grafana_dc
     until: "'availableReplicas' in grafana_dc.resources[0].status and grafana_dc.resources[0].status.availableReplicas == 1"
     retries: 15

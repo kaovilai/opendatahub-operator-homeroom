@@ -14,3 +14,10 @@
   - import_role:
       name: "spark-operator"
     when: odh_spec['spark-operator'] is defined and odh_spec['spark-operator']['odh_deploy']
+  - import_role:
+      name: "prometheus"
+    when: odh_spec['monitoring'] is defined and odh_spec['monitoring']['odh_deploy']
+  - import_role:
+      name: "grafana"
+    when: odh_spec['monitoring'] is defined and odh_spec['monitoring']['odh_deploy']
+    
