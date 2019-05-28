@@ -6,5 +6,12 @@
     definition: "{{ lookup('template', item)}}"
   with_items:
     - spark-operator.yaml.j2
+
+- name: Deploy the initial spark cluster
+  k8s :
+    state: present
+    definition: "{{ lookup('template', item)}}"
+  with_items:
     - jupyterhub-spark-operator-configmap.yaml.j2
+  when: ( worker_node_count|int + master_node_count|int ) > 0
 
