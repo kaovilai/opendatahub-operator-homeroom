@@ -22,7 +22,7 @@
       image: nbviewer
       tag: "latest"
 
-- name: Create notebook BuildConfigs
+- name: Create ALL notebook BuildConfigs
   openshift_raw:
     state: "{{ state }}"
     definition: "{{ lookup('template', item) }}"
@@ -33,7 +33,7 @@
     - jupyter-notebook-images/tensorflow-notebook-buildconfig.json.j2
     - nbviewer-images/nbviewer-buildconfig.json.j2
 
-- name: Create spark notebook ImageStreams (for dev plan)
+- name: Create spark notebook ImageStreams
   openshift_raw:
     state: "{{ state }}"
     definition: "{{ lookup('template', item.file) }}"
@@ -46,7 +46,7 @@
       image: nbviewer
       tag: "latest"
 
-- name: Create spark notebook BuildConfigs (for dev plan)
+- name: Create spark notebook BuildConfigs
   openshift_raw:
     state: "{{ state }}"
     definition: "{{ lookup('template', item) }}"
@@ -55,7 +55,7 @@
     - jupyter-notebook-images-spark/spark-minimal-notebook-buildconfig.json.j2
     - nbviewer-images/nbviewer-buildconfig.json.j2
 
-- name: Create spark notebook ImageStreams (for other plans)
+- name: Create ALL spark notebook ImageStreams
   openshift_raw:
     state: "{{ state }}"
     definition: "{{ lookup('template', item.file) }}"
@@ -68,7 +68,7 @@
       image: s2i-spark-scipy-notebook
       tag: "3.6"
 
-- name: Create spark notebook BuildConfigs (for other plans)
+- name: Create ALL spark notebook BuildConfigs
   openshift_raw:
     state: "{{ state }}"
     definition: "{{ lookup('template', item) }}"
@@ -110,14 +110,14 @@
     - jupyterhub-deployer/serviceaccount.json.j2
     - jupyterhub-deployer/rolebinding.json.j2
 
-- name: Create the Jupyterhub ConfigMap
+- name: Create the jupyterhub_config ConfigMap
   k8s:
     state: "{{ state }}"
     definition: "{{ lookup('template', item)}}"
   with_items:
     - jupyterhub-deployer/configmap.json.j2
 
-- name: Deploy the Jupyterhub DB
+- name: Deploy the Jupyterhub database
   k8s:
     state: "{{ state }}"
     definition: "{{ lookup('template', item)}}"
@@ -126,7 +126,7 @@
     - jupyterhub-deployer/jupyterhub-db-dc.json.j2
     - jupyterhub-deployer/jupyterhub-db-service.json.j2
 
-- name: deploy Jupyterhub
+- name: Deploy Jupyterhub
   k8s:
     state: "{{ state }}"
     definition: "{{ lookup('template', item)}}"
