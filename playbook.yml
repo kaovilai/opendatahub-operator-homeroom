@@ -6,6 +6,11 @@
   - import_role:
       name: "opendatahub"
   - import_role:
-      name: "jupyter-on-openshift"
+      name: "aicoe-jupyterhub"
+    when: odh_spec['aicoe-jupyterhub'] is defined and odh_spec['aicoe-jupyterhub']['odh_deploy']
+  - import_role:
+     name: "jupyter-on-openshift"
+    when: odh_spec['jupyter-on-openshift'] is defined and odh_spec['jupyter-on-openshift']['odh_deploy']
   - import_role:
       name: "spark-operator"
+    when: odh_spec['spark-operator'] is defined and odh_spec['spark-operator']['odh_deploy']

@@ -1,0 +1,38 @@
+{
+    "kind": "BuildConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "jupyterhub-img",
+        "namespace": "{{ meta.namespace }}",
+        "labels": {
+            "app": "jupyterhub"
+        }
+    },
+    "spec": {
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            }        ],
+        "source": {
+            "type": "Git",
+            "git": {
+                "uri": "https://github.com/aicoe/jupyterhub-ocp-oauth"
+            }
+        },
+        "strategy": {
+            "type": "Source",
+            "sourceStrategy": {
+                "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "jupyterhub:latest"
+                }
+            }
+        },
+        "output": {
+            "to": {
+                "kind": "ImageStreamTag",
+                "name": "jupyterhub-img:latest"
+            }
+        }
+    }
+}

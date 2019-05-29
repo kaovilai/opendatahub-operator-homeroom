@@ -1,0 +1,23 @@
+{
+    "kind": "PersistentVolumeClaim",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "jupyterhub-db",
+        "namespace": "{{ meta.namespace }}",
+        "annotations": {
+{% if storage_class %}
+            "volume.beta.kubernetes.io/storage-class": "{{ storage_class }}"
+{% endif %}
+        }
+    },
+    "spec": {
+        "accessModes": [
+            "ReadWriteOnce"
+        ],
+        "resources": {
+            "requests": {
+                "storage": "1Gi"
+            }
+        }
+    }
+}

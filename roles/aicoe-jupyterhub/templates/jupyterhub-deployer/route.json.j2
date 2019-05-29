@@ -1,0 +1,29 @@
+{
+    "kind": "Route",
+    "apiVersion": "v1",
+    "metadata": {
+        "annotations": {
+            "kubernetes.io/tls-acme": "true"
+        },
+        "name": "jupyterhub",
+        "namespace": "{{ meta.namespace }}",
+        "labels": {
+            "app": "jupyterhub"
+        }
+    },
+    "spec": {
+        "host": "",
+        "to": {
+            "kind": "Service",
+            "name": "jupyterhub",
+            "weight": 100
+        },
+        "port": {
+            "targetPort": "8080-tcp"
+        },
+        "tls": {
+            "termination": "edge",
+            "insecureEdgeTerminationPolicy": "Redirect"
+        }
+    }
+}

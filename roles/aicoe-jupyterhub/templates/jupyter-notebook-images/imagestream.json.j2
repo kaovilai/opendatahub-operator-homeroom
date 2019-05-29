@@ -1,0 +1,33 @@
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "{{ item.image }}",
+        "namespace": "{{ meta.namespace }}",
+        "labels": {
+            "build": "{{ item.image }}"
+        }
+    },
+    "spec": {
+{% if registry %}
+        "tags": [
+            {
+                "annotations": {
+                    "openshift.io/imported-from": "{{ registry }}/{{ repository }}/{{ item.image }}"
+                },
+                "from": {
+                    "kind": "DockerImage",
+                    "name": "{{ registry }}/{{ repository }}/{{ item.image }}:{{ item.tag }}"
+                },
+                "name": "{{ item.tag }}",
+                "referencePolicy": {
+                    "type": "Source"
+                }
+            }
+        ],
+{% endif %}
+        "lookupPolicy": {
+            "local": true
+        }
+    }
+}

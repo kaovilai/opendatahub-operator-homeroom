@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jupyter-singleuser-profiles
+  namespace: "{{ meta.namespace }}"
+data:
+  jupyterhub-singleuser-profiles.yaml: |
+      profiles:
+      - name: globals
+        env:
+          S3_ENDPOINT_URL: {{ s3_endpoint_url }}
+        resources:
+          mem_limit: 2Gi
+          cpu_limit: 1
+      - name: Spark Notebook
+        images:
+        - 's2i-spark-minimal-notebook:3.6'
+        - 's2i-spark-scipy-notebook:3.6'
+        env:
+          PYSPARK_SUBMIT_ARGS: '{{ spark_pyspark_submit_args }}'
+          PYSPARK_DRIVER_PYTHON: '{{ spark_pyspark_driver_python }}'
+          PYSPARK_DRIVER_PYTHON_OPTS: '{{ spark_pyspark_driver_python_opts }}'
+          SPARK_HOME: '{{ spark_home }}'
+          PYTHONPATH: '{{ spark_pythonpath }}'
+        services:
+          spark:
+            template: '{{ spark_configmap_template }}'
+            parameters:
+              WORKER_NODES: '{{ spark_worker_nodes }}'
+              MASTER_NODES: '{{ spark_master_nodes }}'
+              MEMORY: '{{ spark_memory }}'
+              CPU: '{{ spark_cpu }}'
+              SPARK_IMAGE: '{{ spark_image }}'
+            return:
+              SPARK_CLUSTER: 'metadata.name'
