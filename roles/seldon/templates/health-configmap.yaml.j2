@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: redis
+    chart: redis-6.4.5
+    heritage: Tiller
+    release: release-name
+  name: release-name-redis-health
+  namespace: "{{ meta.namespace }}"
+data:
+  ping_local.sh: |-
+    response=$(
+      timeout -s 9 $1 \
+      redis-cli \
+        -h localhost \
+        -p $REDIS_PORT \
+        ping
+    )
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_master.sh: |-
+    response=$(
+      timeout -s 9 $1 \
+      redis-cli \
+        -h $REDIS_MASTER_HOST \
+        -p $REDIS_MASTER_PORT_NUMBER \
+        ping
+    )
+    if [ "$response" != "PONG" ]; then
+      echo "$response"
+      exit 1
+    fi
+  ping_local_and_master.sh: |-
+    script_dir="$(dirname "$0")"
+    exit_status=0
+    "$script_dir/ping_local.sh" $1 || exit_status=$?
+    "$script_dir/ping_master.sh" $1 || exit_status=$?
+    exit $exit_status

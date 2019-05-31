@@ -1,0 +1,16 @@
+---
+#tasks file for seldon
+- name: deploy Seldon Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', item)}}"
+  with_items:
+    - rbac.yaml.j2
+    - apife-deployment.yaml.j2
+    - cluster-manager-deployment.yaml.j2
+    - configmap.yaml.j2
+    - health-configmap.yaml.j2
+    - redis-master-statefulset.yaml.j2
+    - redis-master-svc.yaml.j2
+    - api-route.yaml.js
+

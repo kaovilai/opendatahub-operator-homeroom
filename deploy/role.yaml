@@ -799,3 +799,7 @@ rules:
   - '*'
   verbs:
   - '*'
+- apiGroups:
+  - machinelearning.seldon.io
+  resources: ["*"]
+  verbs: ["*"]

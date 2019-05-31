@@ -50,6 +50,10 @@ spec:
     worker_memory: 2Gi
     worker_cpu: 2
 
+  # Seldon Delployment
+  seldon:
+    odh_deploy: false
+ 
   # JupyterHub deployment developed by Graham Dumpleton - https://github.com/jupyter-on-openshift/jupyterhub-quickstart
   jupyter-on-openshift:
     # Deploy the ODH jupyter-on-openshift role if True
