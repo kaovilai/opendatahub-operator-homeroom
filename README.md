@@ -15,50 +15,24 @@ Operator Image available @ https://quay.io/llasmith/opendatahub-operator
 Custom Resource Definition: OpenDataHub
 
 
-Manual Installation
+Installation
 ----------
+
+**Automated installation through the Operator Lifecycle Manager (OLM)**
+
 To add open data hub to the OLM Catalog to see the [olm-catalog README](/deploy/manifests/README.md)
 
-The operator is currently designed to work within your existing namespace. You'll need cluster-admin privileges to create the OpenDataHub custom resource definition and apply the anyuid scc for the ceph container
+**Manual Installation**
 
-```bash
-# Add the OpenDataHub Custom Resource Definition. Requires cluster-admin privileges
-$ oc create -f opendatahub_v1alpha1_opendatahub_crd.yaml
-
-# Setup RBAC for the operator
-$ oc create -f deploy/service_account.yaml
-$ oc create -f deploy/role.yaml
-$ oc create -f deploy/role_binding.yaml
-```
-
-There is a known [issue](#2) where the jupyterhub installation will fail due to the ODH operator service account not being able to create a rolebinding to a role with more permissions than the ODH service account has access to.
-The current workaround is the make the ODH service account a project admin
-```bash
-$ oc adm policy add-role-to-user admin -z opendatahub-operator
-```
-
-```
-# Deploy the OpenDataHub Operator in the namespace
-$ oc create -f deploy/operator.yaml
-```
-
-```bash
-# Deploy the OpenDataHub custom resources with configuration for your environment
-$ oc create -f opendatahub_v1alpha1_opendatahub_cr.yaml
-```
-
-FOR A CEPH NANO DEPLOYMENT ONLY IN OCP3.11
-Openshift user requires a security context to deploy the Ceph container. Failure to do so will cause the ceph pod initialization to fail with the message "mkdir: cannot create directory '/var/lib/ceph': Permission denied""
-```bash
-$ oc adm policy add-scc-to-user anyuid system:serviceaccount:<NAMESPACE>:default
-```
-
+To manually install the operator, see the
+[Manual Installation documentation](/docs/manual-installation.adoc).
 
 Directory
 ----------
 * build/ - Dockerfile used to build the operator image
 * deploy/ - OpenShift templates for the CRD, RBAC and operator resources
 * deploy/manifests - OpenShift catalog and subscription files for the package
+* docs/ - Documentation for the operator
 * roles/ - Ansible roles used to deploy each component of the Open Data Hub
 * playbook.yml - Ansible playbook that manages that orchestrates the deployment of the Open Data Hub within the namespace
 * watches.yaml - Yaml that registers the Custom Resources managed by this operator
