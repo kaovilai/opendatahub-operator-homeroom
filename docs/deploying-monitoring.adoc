@@ -1,0 +1,41 @@
+// Module included in the following assemblies:
+//
+// <List assemblies here, each on a new line>
+
+// Base the file name and the ID on the module title. For example:
+// * file name: doing-procedure-a.adoc
+// * ID: [id="doing-procedure-a"]
+// * Title: = Doing procedure A
+
+// The ID is used as an anchor for linking to the module. Avoid changing it after the module has been published to ensure existing links are not broken.
+[id="deploying-monitoring"]
+// The `context` attribute enables module reuse. Every module's ID includes {context}, which ensures that the module has a unique ID even if it is reused multiple times in a guide.
+= Deploying Monitoring Setup
+// Start the title of a procedure module with a verb, such as Creating or Create. See also _Wording of headings_ in _The IBM Style Guide_.
+
+This procedure describes how to enable (and disable) monitoring for the Open Data Hub
+
+.Prerequisites
+
+* A terminal shell with the OpenShift client command `oc` availabe.
+* A copy of the files in this repository available in your terminal shell.
+* The ability to run the operator as outlined at link:manual-installation.adoc[manual-installation]
+
+.Procedure
+
+. Change directory to your copy of the repository.
+. Open `deploy/crds/opendatahub_v1alpha1_opendatahub_cr.yaml` in your editor of choice.
+. Setting `odh_deploy` to `true` or `false` will either enable or disable monitoring. Edit the following lines in the file to do so.
++
+....
+  monitoring:
+    odh_deploy: true
+....
+
+//.Verification steps
+//(Optional) Provide the user with verification method(s) for the procedure, such as expected output or commands that can be used to check for success or failure.
+
+.Additional resources
+
+* More information about *Prometheus* can be found link:http://prometheus.io[here].
+* More information about *Grafana* can be found link:http://grafana.com[here].
