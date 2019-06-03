@@ -477,6 +477,26 @@ data:
         action: replace
         target_label: kubernetes_pod_name
 
+    - job_name: 'Spark Metrics'
+
+      honor_labels: true
+      kubernetes_sd_configs:
+        - role: pod
+          namespaces:
+            names:
+              - "{{ meta.namespace }}"
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_name]
+          regex: ^.*(spark).*$
+          target_label: kubernetes_pod_name
+          action: keep
+        - source_labels: [__address__]
+          regex: (.+):(\d+)
+          target_label: __address__
+          replacement: ${1}:7777
+
+
+
     # Scrape config for node-exporter, which is expected to be running on port 9100.
     - job_name: 'kubernetes-nodes-exporter'
 
