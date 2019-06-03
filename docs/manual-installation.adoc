@@ -35,16 +35,16 @@ project namespace on OpenShift.
   following command.
 +
 ....
-oc create -f deploy/crds/opendatahub_v1alpha1_opendatahub_crd.yaml
+oc apply -f deploy/crds/opendatahub_v1alpha1_opendatahub_crd.yaml
 ....
 
 . Configure role-based access control (RBAC) for the operator by entering the
   following commands.
 +
 ....
-oc create -f deploy/service_account.yaml
-oc create -f deploy/role.yaml
-oc create -f deploy/role_binding.yaml
+oc apply -f deploy/service_account.yaml
+oc apply -f deploy/role.yaml
+oc apply -f deploy/role_binding.yaml
 ....
 
 . Modify role permissions for the operator service account by entering the
@@ -63,14 +63,14 @@ aforementioned command is the current workaround for that issue.
 . Deploy the Open Data Hub operator by entering the following command.
 +
 ....
-oc create -f deploy/operator.yaml
+oc apply -f deploy/operator.yaml
 ....
 
 . Deploy the Open Data Hub using a custom resource for your environment  by
   entering the following command.
 +
 ....
-oc create -f opendatahub_v1alpha1_opendatahub_cr.yaml
+oc apply -f opendatahub_v1alpha1_opendatahub_cr.yaml
 ....
 
 . *FOR A CEPH NANO DEPLOYMENT ONLY IN OCP3.11*
