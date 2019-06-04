@@ -20,7 +20,7 @@ Installation
 
 **Automated installation through the Operator Lifecycle Manager (OLM)**
 
-To add open data hub to the OLM Catalog to see the [olm-catalog README](/deploy/manifests/README.md)
+To add Open Data Hub to the OLM Catalog to see the [olm-catalog README](/deploy/manifests/README.md)
 
 **Manual Installation**
 
