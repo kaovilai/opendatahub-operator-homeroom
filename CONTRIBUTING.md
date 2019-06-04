@@ -64,8 +64,8 @@ Once you are happy with your changes, you can submit a Merge Request
 ## How to add documentation for your changes
 
 If you are proposing a change that will add features to the operator, you
-should create documentation for that feature. This project uses a style of
-documentation inspired by the
+are expected to create documentation for that feature. This project uses a
+style of documentation inspired by the
 [Modular Documentation Project](https://redhat-documentation.github.io/modular-docs/).
 
 All documentation should be in [Asciidoc](http://asciidoc.org/) formatted
