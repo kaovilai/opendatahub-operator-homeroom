@@ -20,7 +20,7 @@ project namespace on OpenShift.
 
 * Access to OpenShift using an account with `cluster-admin` privileges
   available. You will need the `cluster-admin` privileges to create the
-  `OpenDataHub` custom resource definition, and to apply the anyuid security
+  `OpenDataHub` custom resource definition, and to apply the `anyuid` security
   context constraint (SCC) for the Ceph container.
 
 * A terminal shell with the OpenShift client command `oc` availabe.
