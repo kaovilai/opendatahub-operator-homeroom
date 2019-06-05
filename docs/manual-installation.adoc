@@ -1,0 +1,104 @@
+// Module included in the following assemblies:
+//
+// <List assemblies here, each on a new line>
+
+// Base the file name and the ID on the module title. For example:
+// * file name: doing-procedure-a.adoc
+// * ID: [id="doing-procedure-a"]
+// * Title: = Doing procedure A
+
+// The ID is used as an anchor for linking to the module. Avoid changing it after the module has been published to ensure existing links are not broken.
+[id="manual-installation"]
+// The `context` attribute enables module reuse. Every module's ID includes {context}, which ensures that the module has a unique ID even if it is reused multiple times in a guide.
+= Installing the Open Data Hub manually
+// Start the title of a procedure module with a verb, such as Creating or Create. See also _Wording of headings_ in _The IBM Style Guide_.
+
+This procedure describes how to install the Open Data Hub operator into your
+project namespace on OpenShift.
+
+.Prerequisites
+
+* Access to OpenShift using an account with `cluster-admin` privileges
+  available. You will need the `cluster-admin` privileges to create the
+  `OpenDataHub` custom resource definition, and to apply the `anyuid` security
+  context constraint (SCC) for the Ceph container.
+
+* A terminal shell with the OpenShift client command `oc` availabe.
+
+* A copy of the files in this repository available in your terminal shell.
+
+.Procedure
+
+. Change directory to the root of your copy of this repository.
+
+. Add the `OpenDataHub` custom resource definition to OpenShift by entering the
+  following command.
++
+....
+oc apply -f deploy/crds/opendatahub_v1alpha1_opendatahub_crd.yaml
+....
+
+. Configure role-based access control (RBAC) for the operator by entering the
+  following commands.
++
+....
+oc apply -f deploy/service_account.yaml
+oc apply -f deploy/role.yaml
+oc apply -f deploy/role_binding.yaml
+....
+
+. Modify role permissions for the operator service account by entering the
+  following command.
++
+....
+oc adm policy add-role-to-user admin -z opendatahub-operator
+....
++
+There is a https://gitlab.com/opendatahub/opendatahub-operator/issues/2[known issue]
+where the JupyterHub installation will fail due to the operator service
+account not being able to create a rolebinding to a role with more
+permissions than the operator service account has access to. The
+aforementioned command is the current workaround for that issue.
+
+. Deploy the Open Data Hub operator by entering the following command.
++
+....
+oc apply -f deploy/operator.yaml
+....
+
+. Copy the default Open Data Hub custom resource manifest. Copying this file
+  will allow you to make changes for your environment without disturbing the
+  original file.
++
+....
+cp deploy/crds/opendatahub_v1alpha1_opendatahub_cr.yaml my_environment_cr.yaml
+....
+
+. Deploy the Open Data Hub using the custom resource manifest for your
+  environment by entering the following command.
++
+....
+oc apply -f my_environment_cr.yaml
+....
+
+. *FOR A CEPH NANO DEPLOYMENT ONLY IN OCP3.11*
++
+The OpenShift user requires a security context to deploy the Ceph container.
+Not having this context  will cause the Ceph pod initialization to fail with
+the message
+`mkdir: cannot create directory '/var/lib/ceph': Permission denied`.
+To prevent this failure, enter the following command (replacing
+`<NAMESPACE>` with your project name).
++
+....
+oc adm policy add-scc-to-user anyuid system:serviceaccount:<NAMESPACE>:default
+....
+
+//.Verification steps
+//(Optional) Provide the user with verification method(s) for the procedure, such as expected output or commands that can be used to check for success or failure.
+
+.Additional resources
+
+* If you would like to perform an automated installation using the Operator
+  Lifecycle Manager (OLM), please see
+  link:/deploy/manifests/README.md[this documentation].

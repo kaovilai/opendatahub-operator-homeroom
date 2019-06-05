@@ -60,3 +60,32 @@ To test your changes - i.e. to deploy updated version of the operator to OpenShi
     ```
 
 Once you are happy with your changes, you can submit a Merge Request
+
+## How to add documentation for your changes
+
+If you are proposing a change that will add features to the operator, you
+are expected to create documentation for that feature. This project uses a
+style of documentation inspired by the
+[Modular Documentation Project](https://redhat-documentation.github.io/modular-docs/).
+
+All documentation should be in [Asciidoc](http://asciidoc.org/) formatted
+files stored in the `docs` directory. Most features will be covered by the
+[Procedure template](https://github.com/redhat-documentation/modular-docs/blob/master/modular-docs-manual/files/TEMPLATE_PROCEDURE_doing-one-procedure.adoc).
+You should follow this template when proposing your changes.
+
+In general you should follow this process for creating your documentation:
+
+1. Copy the [template file](https://raw.githubusercontent.com/redhat-documentation/modular-docs/master/modular-docs-manual/files/TEMPLATE_PROCEDURE_doing-one-procedure.adoc)
+   into the `docs` directory and give a name that is appropriate for your
+   feature.
+
+1. Add your documentation to the new file. Make sure to fill out the title
+   and identifier entries, and follow the suggestions in the template. If
+   you have any questions, you should raise them during the review process
+   when you propose your merge.
+
+All new features should have a documentation file to inform users how that
+feature is used and what they can expect. If you are unsure about how to
+start or what content is appropriate, look to the documentation that exists
+in the `docs` directory for inspiration or raise a question to the team
+through the common channels.
