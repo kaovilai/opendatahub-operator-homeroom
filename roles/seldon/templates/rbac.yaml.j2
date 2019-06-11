@@ -87,8 +87,37 @@ rules:
   - update
 - apiGroups:
   - machinelearning.seldon.io
-  resources: ["*"]
-  verbs: ["*"]
+  resources:
+  - seldondeployments
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - machinelearning.seldon.io
+  resources: 
+  - seldondeployments/status
+  verbs: 
+  - get
+  - update
+  - patch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources: 
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

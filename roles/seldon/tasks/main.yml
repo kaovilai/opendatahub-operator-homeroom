@@ -12,5 +12,5 @@
     - health-configmap.yaml.j2
     - redis-master-statefulset.yaml.j2
     - redis-master-svc.yaml.j2
-    - api-route.yaml.js
+    - api-route.yaml.j2
 
