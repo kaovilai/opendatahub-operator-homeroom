@@ -2,14 +2,14 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   labels: &Labels
-    app.kubernetes.io/name: release-name
+    app.kubernetes.io/name: seldon-core
     app.kubernetes.io/component: seldon-core-apiserver
     app: seldon-apiserver-container-app
     chart: seldon-core-0.2.8-SNAPSHOT
-    release: release-name
+    release: seldon-core
     heritage: Tiller
     component: seldon-core
-  name: release-name-seldon-apiserver
+  name: seldon-core-seldon-apiserver
   namespace: "{{ meta.namespace }}"
 spec:
   replicas: 1
@@ -28,7 +28,7 @@ spec:
         - name: SELDON_ENGINE_KAFKA_SERVER
           value: kafka:9092
         - name: SELDON_CLUSTER_MANAGER_REDIS_HOST
-          value: release-name-redis-master
+          value: seldon-core-redis-master
         - name: ENGINE_SERVER_GRPC_PORT
           value: '5001'
         - name: ENGINE_SERVER_PORT
@@ -69,10 +69,10 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app.kubernetes.io/name: release-name
+    app.kubernetes.io/name: seldon-core
     app.kubernetes.io/component: seldon-core-apiserver
     app: seldon-apiserver-container-app
-  name: release-name-seldon-apiserver
+  name: seldon-core-seldon-apiserver
   namespace: "{{ meta.namespace }}"
 spec:
   ports:

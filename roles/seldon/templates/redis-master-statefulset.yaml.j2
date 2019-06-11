@@ -1,24 +1,24 @@
 apiVersion: apps/v1beta2
 kind: StatefulSet
 metadata:
-  name: release-name-redis-master
+  name: seldon-core-redis-master
   namespace: "{{ meta.namespace }}"
   labels:
     app: redis
     chart: redis-6.4.5
-    release: "release-name"
+    release: "seldon-core"
     heritage: "Tiller"
 spec:
   selector:
     matchLabels:
-      release: "release-name"
+      release: "seldon-core"
       role: master
       app: redis
-  serviceName: release-name-redis-master
+  serviceName: seldon-core-redis-master
   template:
     metadata:
       labels:
-        release: "release-name"
+        release: "seldon-core"
         chart: redis-6.4.5
         role: master
         app: redis
@@ -29,7 +29,7 @@ spec:
     spec:      
       serviceAccountName: "default"
       containers:
-      - name: release-name-redis
+      - name: seldon-core-redis
         image: "docker.io/bitnami/redis:4.0.14"
         imagePullPolicy: "Always"
         command:
@@ -91,18 +91,18 @@ spec:
       volumes:
       - name: health
         configMap:
-          name: release-name-redis-health
+          name: seldon-core-redis-health
           defaultMode: 0755
       - name: config
         configMap:
-          name: release-name-redis
+          name: seldon-core-redis
   volumeClaimTemplates:
     - metadata:
         name: redis-data
         labels:
           app: "redis"
           component: "master"
-          release: "release-name"
+          release: "seldon-core"
           heritage: "Tiller"
       spec:
         accessModes:

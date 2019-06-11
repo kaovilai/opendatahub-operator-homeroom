@@ -3,12 +3,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-redis-master
+  name: seldon-core-redis-master
   namespace: "{{ meta.namespace }}"
   labels:
     app: redis
     chart: redis-6.4.5
-    release: "release-name"
+    release: "seldon-core"
     heritage: "Tiller"
 spec:
   type: ClusterIP
@@ -18,5 +18,5 @@ spec:
     targetPort: redis
   selector:
     app: redis
-    release: "release-name"
+    release: "seldon-core"
     role: master

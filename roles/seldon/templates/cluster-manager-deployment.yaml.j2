@@ -8,14 +8,14 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels: &Labels
-    app.kubernetes.io/name: release-name
+    app.kubernetes.io/name: seldon-core
     app.kubernetes.io/component: seldon-core-operator
     app: seldon-cluster-manager-server    
     chart: seldon-core-0.2.8-SNAPSHOT
-    release: release-name
+    release: seldon-core
     heritage: Tiller
     component: seldon-core
-  name: release-name-seldon-cluster-manager
+  name: seldon-core-seldon-cluster-manager
   namespace: "{{ meta.namespace }}"
 spec:
   replicas: 1
@@ -33,7 +33,7 @@ spec:
         - name: SPRING_OPTS
           value: 
         - name: SELDON_CLUSTER_MANAGER_REDIS_HOST
-          value: release-name-redis-master
+          value: seldon-core-redis-master
         - name: ENGINE_CONTAINER_IMAGE_AND_VERSION
           value: seldonio/engine:0.2.8-SNAPSHOT
         - name: ENGINE_CONTAINER_IMAGE_PULL_POLICY
