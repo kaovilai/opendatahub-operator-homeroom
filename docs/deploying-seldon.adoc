@@ -53,5 +53,5 @@ Please refer to Seldon documentation on creating and testing models at link:http
 
 .Additional resources
 
-* More information about *Seldon* can be found link:https://www.seldon.io[here].
+* More information about *Seldon* can be found  at link:https://www.seldon.io[www.seldon.io].
 
