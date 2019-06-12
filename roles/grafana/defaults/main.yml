@@ -1,4 +1,4 @@
 IMAGE_GRAFANA: mrsiano/grafana-ocp:latest
 IMAGE_PROXY: openshift/oauth-proxy:v1.1.0
 GRAFANA_URL_ROUTE: ""
-SESSION_SECRET: "{{ ansible_fqdn | to_uuid }}"
+SESSION_SECRET: "{{ 99999999 | random | to_uuid }}"

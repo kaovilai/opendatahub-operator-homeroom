@@ -8,18 +8,6 @@ metadata:
     serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"grafana"}}'
 
 ---
-apiVersion: authorization.openshift.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: grafana-view
-roleRef:
-  name: view
-subjects:
-  - kind: ServiceAccount
-    name: grafana
-    namespace: "{{ meta.namespace }}"
-
----
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -100,7 +88,7 @@ spec:
             - -tls-key=/etc/tls/private/tls.key
             - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
             - -cookie-secret-file=/etc/proxy/secrets/session_secret
-            - -skip-auth-regex=^/metrics,/api/datasources,/api/dashboards
+            - -skip-auth-regex=^
           volumeMounts:
             - mountPath: /etc/tls/private
               name: grafana-tls
@@ -150,6 +138,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-data
+  namespace: "{{ meta.namespace }}"
 spec:
   accessModes:
     - ReadWriteOnce
