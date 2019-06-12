@@ -41,13 +41,15 @@ At this time we do not support any optional Seldon configurations.
 //.Verification steps
 //(Optional) Provide the user with verification method(s) for the procedure, such as expected output or commands that can be used to check for success or failure.
 To verify installation is successful, check all Seldon pods are running with no errors. Users can start deploying models after they are given the following permissions
-* edit file deploy/seldon-user-rbac.yaml to include the correct namespace
-* oc creare -f deploy/seldon-user-rbac.yaml -n <namespace>
-* oc adm policy add-cluster-role-to-user seldon-user <username> -n <namespace>
 
-Please refer to Seldon documentation on creating and testing models at www.seldon.io[here]. For this version of Seldon 0.2.7 we need to allow seldon-engine service to run in any uid or privileged since by default it uses user-id=8888.
-oc adm policy add-scc-to-user privileged -n <namespace> -z seldon-engine
-OR oc adm policy add-scc-to-user anyuid -z runasanyuid --as system:admin
+* `edit file deploy/seldon-user-rbac.yaml to include the correct namespace`
+* `oc create -f deploy/seldon-user-rbac.yaml -n <namespace>`
+* `oc adm policy add-cluster-role-to-user seldon-user <username> -n <namespace>`
+
+Please refer to Seldon documentation on creating and testing models at www.seldon.io[www.seldon.io]. For this version of Seldon 0.2.7 we need to allow seldon-engine service to run in `anyuid` or `privileged` since by default it uses uid=8888.
+
+* `oc adm policy add-scc-to-user privileged -n <namespace> -z seldon-engine`
+* `oc adm policy add-scc-to-user anyuid -z runasanyuid --as system:admin`
 
 .Additional resources
 
