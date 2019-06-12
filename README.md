@@ -10,6 +10,8 @@ Open Data Hub Core
 * S3 Storage via [Ceph container](http://github.com/ceph/ceph-container)
 * JupyterHub 
 * Spark
+* Prometheus
+* Grafana
 
 Operator Image available @ https://quay.io/llasmith/opendatahub-operator
 Custom Resource Definition: OpenDataHub
@@ -43,4 +45,5 @@ Other Resources
 - [Ansible Operator User Guide](https://raw.githubusercontent.com/operator-framework/operator-sdk/master/doc/ansible/user-guide.md)
 - [Operator SDK](https://github.com/operator-framework/operator-sdk)
 - [Operator Lifecycle Manager](https://github.com/operator-framework/operator-lifecycle-manager)
-
+- [Prometheus](https://prometheus.io/)
+- [Grafana](https://grafana.com/)
