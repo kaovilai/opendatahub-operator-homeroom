@@ -1,12 +1,23 @@
 Seldon
 =========
 
-This role will deploy Seldon release 0.2.7. The default setting for seldon-core-crd used is usage_metrics.enabled=false. While the default settings for seldon-core is rbac.enabled=true,apife.enabled=true,ambassador.enabled=false,single_namespace=true
+This role will deploy Seldon release 0.2.7. 
+
+The default setting for seldon-core-crd used is: 
+`usage_metrics.enabled=false` 
+
+The default settings for seldon-core is:
+`rbac.enabled=true`
+`apife.enabled=true`
+`ambassador.enabled=false`
+`single_namespace=true`
 
 This role installs the following pods
 1. Redis
 2. Seldon Cluster Mananger
 3. Seldon API manager
+
+For more information on seldon settings and components please visit [www.seldon.io](https://www.seldon.io)
 
 Role Variables
 --------------
