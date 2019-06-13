@@ -61,6 +61,12 @@ To test your changes - i.e. to deploy updated version of the operator to OpenShi
 
 Once you are happy with your changes, you can submit a Merge Request
 
+### Merging the Merge Requests
+
+Your merge request will be reviewed. Feel free to mention people from `MAINTAINERS` file if there is no response in couple days.
+
+A merge request needs to get an **approval** (or LGTM comment) **from 2 people listed in `MAINTAINERS` file** to be merged. Ideally 2nd approver merges the MR after approving.
+
 ## How to add documentation for your changes
 
 If you are proposing a change that will add features to the operator, you
