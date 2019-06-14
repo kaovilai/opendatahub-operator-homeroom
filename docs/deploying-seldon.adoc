@@ -46,7 +46,7 @@ To verify installation is successful, check all Seldon pods are running with no 
 * `oc create -f deploy/seldon-user-rbac.yaml -n <namespace>`
 * `oc adm policy add-cluster-role-to-user seldon-user <username> -n <namespace>`
 
-Please refer to Seldon documentation on creating and testing models at link:https://www.seldon.io[www.seldon.io]. For this version of Seldon 0.2.7 we need to allow seldon-engine service to run in `anyuid` or `privileged` since by default it uses uid=8888.
+Please refer to Seldon documentation on creating and testing models at link:https://www.seldon.io[www.seldon.io]. For this version of Seldon 0.2.7 we need to allow seldon-engine service to run in `anyuid` or `privileged` since by default it uses `uid=8888`.
 
 * `oc adm policy add-scc-to-user privileged -n <namespace> -z seldon-engine`
 * `oc adm policy add-scc-to-user anyuid -z seldon-engine --as system:admin`
