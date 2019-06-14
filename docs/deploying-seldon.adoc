@@ -42,7 +42,7 @@ At this time we do not support any optional Seldon configurations.
 //(Optional) Provide the user with verification method(s) for the procedure, such as expected output or commands that can be used to check for success or failure.
 To verify installation is successful, check all Seldon pods are running with no errors. Users can start deploying models after they are given the following permissions
 
-* `edit file deploy/seldon-user-rbac.yaml to include the correct namespace`
+* edit file `deploy/seldon-user-rbac.yaml` to include the correct namespace
 * `oc create -f deploy/seldon-user-rbac.yaml -n <namespace>`
 * `oc adm policy add-cluster-role-to-user seldon-user <username> -n <namespace>`
 
