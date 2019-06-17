@@ -22,7 +22,7 @@ subjects:
 
 # Create a fully end-to-end TLS connection to the prometheus proxy
 ---
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: prometheus
@@ -208,7 +208,7 @@ spec:
 
 # Create a fully end-to-end TLS connection to the alert proxy
 ---
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: prometheus-alerts
