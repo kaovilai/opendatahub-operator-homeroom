@@ -20,4 +20,6 @@
   - import_role:
       name: "grafana"
     when: odh_spec['monitoring'] is defined and odh_spec['monitoring']['odh_deploy']
-    
+  - import_role:    
+      name: "seldon"
+    when: odh_spec['seldon'] is defined and odh_spec['seldon']['odh_deploy']

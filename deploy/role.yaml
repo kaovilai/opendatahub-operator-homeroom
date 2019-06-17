@@ -172,6 +172,9 @@ rules:
   - deletecollection
   - patch
   - update
+  - get
+  - list
+  - watch
 - apiGroups:
   - autoscaling
   resources:
@@ -211,6 +214,9 @@ rules:
   - deletecollection
   - patch
   - update
+  - get
+  - list
+  - watch
 - apiGroups:
   - policy
   resources:
@@ -799,3 +805,36 @@ rules:
   - '*'
   verbs:
   - '*'
+- apiGroups:
+  - machinelearning.seldon.io
+  resources:
+  - seldondeployments
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - machinelearning.seldon.io
+  resources:
+  - seldondeployments/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete

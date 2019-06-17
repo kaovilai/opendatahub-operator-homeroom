@@ -1,0 +1,11 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: seldon-core-seldon-apiserver
+  namespace: "{{ meta.namespace }}"  
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: seldon-core-seldon-apiserver
